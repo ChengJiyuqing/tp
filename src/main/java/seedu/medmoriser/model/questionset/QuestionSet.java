@@ -5,6 +5,7 @@ import static seedu.medmoriser.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.medmoriser.model.tag.Tag;
@@ -17,35 +18,39 @@ public class QuestionSet {
 
     // Identity fields
     private final Question question;
-    private final Phone phone;
-    private final Email email;
+    private final Optional<Phone> phone;
+    private final Optional<Email> email;
 
     // Data fields
     private final Answer answer;
-    private final Set<Tag> tags = new HashSet<>();
+    private final Optional<Set<Tag>> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public QuestionSet(Question question, Phone phone, Email email, Answer answer, Set<Tag> tags) {
+    public QuestionSet(Question question, Optional<Phone> phone, Optional<Email> email,
+                       Answer answer, Optional<Set<Tag>> tags) {
         requireAllNonNull(question, phone, email, answer, tags);
         this.question = question;
         this.phone = phone;
         this.email = email;
         this.answer = answer;
-        this.tags.addAll(tags);
+        this.tags = tags;
+        //this.tags.addAll(tags);
     }
 
     public Question getQuestion() {
         return question;
     }
 
+    //TODO: refactor
     public Phone getPhone() {
-        return phone;
+        return phone.get();
     }
 
+    //TODO: refactor
     public Email getEmail() {
-        return email;
+        return email.get();
     }
 
     public Answer getAnswer() {
@@ -55,9 +60,10 @@ public class QuestionSet {
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
+     * TODO: refactor
      */
     public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+        return Collections.unmodifiableSet(tags.get());
     }
 
     /**

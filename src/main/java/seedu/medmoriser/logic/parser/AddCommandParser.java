@@ -7,6 +7,8 @@ import static seedu.medmoriser.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.medmoriser.logic.parser.CliSyntax.PREFIX_QUESTION;
 import static seedu.medmoriser.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -32,18 +34,35 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_QUESTION,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ANSWER, PREFIX_TAG);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_QUESTION, PREFIX_ANSWER, PREFIX_PHONE, PREFIX_EMAIL)
+        //if input contains valid question and answer input
+        if (!arePrefixesPresent(argMultimap, PREFIX_QUESTION, PREFIX_ANSWER)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-
         Question question = ParserUtil.parseQuestion(argMultimap.getValue(PREFIX_QUESTION).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Answer answer = ParserUtil.parseAnswer(argMultimap.getValue(PREFIX_ANSWER).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Optional<Phone> phone = Optional.empty();
+        Optional<Email> email = Optional.empty();
+        Optional<Set<Tag>> tagList = Optional.empty();
 
+        //TODO: if input contains valid phone input
+        if (arePrefixesPresent(argMultimap, PREFIX_PHONE)) {
+            phone = Optional.of(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+
+        }
+
+        //TODO: if input contains valid email input
+        if (!arePrefixesPresent(argMultimap, PREFIX_EMAIL)) {
+            email = Optional.of(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+        }
+
+        //TODO: if input contains valid tag input
+        if (!arePrefixesPresent(argMultimap, PREFIX_TAG)) {
+            tagList = Optional.of(ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG)));
+        }
+
+
+        //TODO: modify this call to constructor
         QuestionSet questionSet = new QuestionSet(question, phone, email, answer, tagList);
 
         return new AddCommand(questionSet);
