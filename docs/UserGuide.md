@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-This guide aims to orientate you to the features of **Medmoriser**. If you're a medical student looking for a quiz 
+This guide aims to orientate you to the features of **Medmoriser**. If you're a medical student looking for a quiz
 management system, this guide will give you all the information you need to get started with **Medmoriser**.
 
 * Table of Contents
@@ -99,14 +99,14 @@ If you would like to search the database, you can do so in a few ways:
 
 1. Find Q&A with **questions** containing any of the given keywords.
 
-    Format: `find q/KEYWORD`, for 2 or more words: `find q/KEYWORD1, KEYWORD2`
+    Format: `find q/KEYWORD`, for 2 or more words: `find q/PHRASE 1, KEYWORD1`
 
 2. Find Q&A with **answers** containing any of the given keywords.
 
-    Format: `find a/KEYWORD`, for 2 or more words: `find q/KEYWORD1, KEYWORD2`
+    Format: `find a/KEYWORD`, for 2 or more words: `find q/PHRASE 1, KEYWORD1`
 
 3. Find Q&A with **tags** containing any of the given keywords. 
-    Keywords for tags can have spaces. This requires the text to have an exact match (case-insensitive).
+    Keywords for tags can also have phrases, however this requires the text to have an exact match (case-insensitive).
 
     Format: `find a/KEYWORD`, for 2 or more words: `find q/KEYWORD1, KEYWORD2`
 
@@ -115,10 +115,10 @@ If you would like to search the database, you can do so in a few ways:
     Format: `find a/KEYWORD`, for 2 or more words: `find q/KEYWORD1, KEYWORD2`
 
 Examples:
-* `find q/lung, disease` - finds questions with the word lung and/or disease
-* `find a/vessels` - finds answers with the word vessels
-* `find t/anatomy, Nervous System` - finds question sets tagged with the word anatomy or Nervous System (can be both)
-* `find infection` - finds question and/or answers with the word infection
+* `find q/system, disease` - finds questions with the word "system" and/or "disease".
+* `find a/vessels, chronic disease` - finds answers with the word vessels, and/or the phrase "chronic disease".
+* `find t/anatomy, Nervous System` - finds question sets tagged with the word "anatomy" and/or "Nervous System" (can be both), requires exact match of words (case-insensitive).
+* `find infection, nervous system` - finds question and/or answers with the word infection, and/or the phrase "nervous system"
 
 ### Clearing all entries: `clear`
 
@@ -158,7 +158,7 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **List** | `list`
 **Edit** | `edit INDEX [q/QUESTION] [a/ANSWER] [t/TAG]…​` <br> e.g., `edit a/Maintain blood pressure t/cardiology`
-**Find** | `find KEYWORD` <br> e.g., `find system`
+**Find** | `find KEYWORD or [q/QUESTION] or [a/ANSWER] or [t/TAG]` <br> e.g., `find system, or find a/answer1, answer 2`
 **Clear** | `clear`
 **Help** | `help`
 **Exit** | `exit`

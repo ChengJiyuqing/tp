@@ -1,0 +1,75 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MedmoriserParser" as MedmoriserParser MEDMORISER_PARSER_COLOR
+participant ":EditCommandParser" as EditCommandParser COMMAND_PARSER_COLOR
+participant "e:EditCommand" as EditCommand COMMAND_COLOR
+participant ":CommandResult" as CommandResult COMMAND_RESULT_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("edit 1 q/what causes acne?")
+activate LogicManager
+
+LogicManager -> MedmoriserParser : parseCommand("edit 1 q/what causes acne?")
+activate MedmoriserParser
+
+create EditCommandParser
+MedmoriserParser -> EditCommandParser
+activate EditCommandParser
+
+EditCommandParser --> MedmoriserParser
+deactivate EditCommandParser
+
+MedmoriserParser -> EditCommandParser : parse("1 q/what causes acne?")
+activate EditCommandParser
+
+create EditCommand
+EditCommandParser -> EditCommand
+activate EditCommand
+
+EditCommand --> EditCommandParser : e
+deactivate EditCommand
+
+EditCommandParser --> MedmoriserParser : e
+deactivate EditCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+EditCommandParser -[hidden]-> MedmoriserParser
+destroy EditCommandParser
+
+MedmoriserParser --> LogicManager : e
+deactivate MedmoriserParser
+
+LogicManager -> EditCommand : execute()
+activate EditCommand
+
+EditCommand -> Model : setQAndA(qAndAToEdit, editedQAndA)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Model : updateFilteredQAndAList(PREDICATE_SHOW_ALL_QANDA)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+create CommandResult
+EditCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> EditCommand
+deactivate CommandResult
+
+EditCommand --> LogicManager : result
+deactivate EditCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

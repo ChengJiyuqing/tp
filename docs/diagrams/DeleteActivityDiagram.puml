@@ -1,0 +1,15 @@
+@startuml
+
+start
+:User executes delete command;
+:Parse the delete command;
+if () then ([quiz is in progress or index out of bounds])
+  :Throw CommandException;
+else ([else])
+  :Delete the QAndA specified;
+  :Display success message;
+endif
+
+stop
+
+@enduml

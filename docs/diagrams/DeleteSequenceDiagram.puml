@@ -3,10 +3,10 @@
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
-participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
-participant "d:DeleteCommand" as DeleteCommand LOGIC_COLOR
-participant ":CommandResult" as CommandResult LOGIC_COLOR
+participant ":MedmoriserParser" as MedmoriserParser MEDMORISER_PARSER_COLOR
+participant ":DeleteCommandParser" as DeleteCommandParser COMMAND_PARSER_COLOR
+participant "d:DeleteCommand" as DeleteCommand COMMAND_COLOR
+participant ":CommandResult" as CommandResult COMMAND_RESULT_COLOR
 end box
 
 box Model MODEL_COLOR_T1
@@ -16,17 +16,17 @@ end box
 [-> LogicManager : execute("delete 1")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("delete 1")
-activate AddressBookParser
+LogicManager -> MedmoriserParser : parseCommand("delete 1")
+activate MedmoriserParser
 
 create DeleteCommandParser
-AddressBookParser -> DeleteCommandParser
+MedmoriserParser -> DeleteCommandParser
 activate DeleteCommandParser
 
-DeleteCommandParser --> AddressBookParser
+DeleteCommandParser --> MedmoriserParser
 deactivate DeleteCommandParser
 
-AddressBookParser -> DeleteCommandParser : parse("1")
+MedmoriserParser -> DeleteCommandParser : parse("1")
 activate DeleteCommandParser
 
 create DeleteCommand
@@ -36,19 +36,19 @@ activate DeleteCommand
 DeleteCommand --> DeleteCommandParser : d
 deactivate DeleteCommand
 
-DeleteCommandParser --> AddressBookParser : d
+DeleteCommandParser --> MedmoriserParser : d
 deactivate DeleteCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
-DeleteCommandParser -[hidden]-> AddressBookParser
+DeleteCommandParser -[hidden]-> MedmoriserParser
 destroy DeleteCommandParser
 
-AddressBookParser --> LogicManager : d
-deactivate AddressBookParser
+MedmoriserParser --> LogicManager : d
+deactivate MedmoriserParser
 
 LogicManager -> DeleteCommand : execute()
 activate DeleteCommand
 
-DeleteCommand -> Model : deletePerson(1)
+DeleteCommand -> Model : deleteQAndA(1)
 activate Model
 
 Model --> DeleteCommand

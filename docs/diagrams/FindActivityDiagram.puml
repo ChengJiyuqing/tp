@@ -1,0 +1,25 @@
+@startuml
+!include style.puml
+
+start
+:"Find command is executed";
+:"Command is parsed";
+
+if (command is valid) then (valid)
+    :identify find command type;
+    if (find in tags) then (yes)
+        :retrieve tag predicate;
+    elseif (find in answers) then (yes)
+        :retrieve answer predicate;
+    elseif (find in questions) then
+        :retrieve question predicate;
+    else
+        :retrieve QAndA predicate;
+    endif
+    :retrieve list of questions;
+else (invalid)
+    :"Show invalid command message";
+endif
+:show on GUI;
+stop
+@enduml
