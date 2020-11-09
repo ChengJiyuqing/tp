@@ -9,9 +9,7 @@ Medmoriser is a desktop app to help medical students organise, memorise and revi
 
 Given below are my contributions to the project.
 
-* **Code contributed**: [RepoSense Link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=chengjiyuqing&sort=groupTitle&sortWithin=title&since=2020-08-14&until=2020-11-09&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
-
-* **Project management**:
+* **Code contributed**: [RepoSense Link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=chengjiyuqing)
   * Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
 
 <div style="page-break-after: always;"></div>
